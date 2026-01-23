@@ -10,4 +10,5 @@ imports: [FaceSnapComponent],
 })
 export class AppComponent {
   title = 'snapface';
+  
 }
