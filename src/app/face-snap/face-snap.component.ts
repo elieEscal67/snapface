@@ -14,6 +14,8 @@ export class FaceSnapComponent implements OnInit {
   createdAt!: Date;     // Date de création
   snaps!: number;       // Nombre de "snaps"
   imageUrl!: string;
+  isSnapped !: boolean
+  snapButtonText!: string;
 
   // === Méthode ngOnInit ===
   // Appelée automatiquement par Angular après que le composant a été créé
@@ -23,6 +25,21 @@ export class FaceSnapComponent implements OnInit {
     this.description = 'Mon meilleur pote depuis toujours !'; 
     this.createdAt = new Date();                
     this.snaps = 5;
-    this.imageUrl  = "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg"                      
+    this.imageUrl  = "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg"
+    this.isSnapped =false ;
+    this.snapButtonText = 'Oh Snap!';               
   }
+  onSnap() {
+
+    if( this.isSnapped) {
+             this.snaps -- ;
+              this.snapButtonText = "Oh Snap !" ;
+              this.isSnapped = false;
+        } else {
+          this.snaps ++;
+           this.snapButtonText = "Oh Unsnap" ;
+           this.isSnapped = true;}
+  } 
+
+  
 }
