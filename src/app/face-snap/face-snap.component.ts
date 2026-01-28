@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FaceSnap } from '../models/face-snap';
 
 @Component({
   selector: 'app-face-snap',
@@ -8,38 +9,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './face-snap.component.scss'
 })
 export class FaceSnapComponent implements OnInit {
-  // === Propriétés du composant ===
-  title!: string;       // Titre du FaceSnap
-  description!: string; // Description associée
-  createdAt!: Date;     // Date de création
-  snaps!: number;       // Nombre de "snaps"
-  imageUrl!: string;
-  isSnapped !: boolean
+
+  @Input() faceSnap!: FaceSnap;
+
   snapButtonText!: string;
+  userHasSnapped!: boolean;
 
-  // === Méthode ngOnInit ===
-  // Appelée automatiquement par Angular après que le composant a été créé
-  // C'est le moment idéal pour initialiser les propriétés du composant
   ngOnInit() {
-    this.title = 'Archibald';                     
-    this.description = 'Mon meilleur pote depuis toujours !'; 
-    this.createdAt = new Date();                
-    this.snaps = 5;
-    this.imageUrl  = "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg"
-    this.isSnapped =false ;
-    this.snapButtonText = 'Oh Snap!';               
+    this.snapButtonText = 'Oh Snap!';
+    this.userHasSnapped = false;
   }
-  onSnap() {
 
-    if( this.isSnapped) {
-             this.snaps -- ;
-              this.snapButtonText = "Oh Snap !" ;
-              this.isSnapped = false;
-        } else {
-          this.snaps ++;
-           this.snapButtonText = "Oh Unsnap" ;
-           this.isSnapped = true;}
-  } 
+  onSnap(): void {
+    if (this.userHasSnapped) {
+      this.unSnap();
+    } else {
+      this.snap();
+    }
+  }
 
-  
+  unSnap(): void {
+    this.faceSnap.removeSnap();
+    this.snapButtonText = 'Oh Snap!';
+    this.userHasSnapped = false;
+  }
+
+  snap(): void {
+    this.faceSnap.addSnap();
+    this.snapButtonText = 'Oops, unSnap!';
+    this.userHasSnapped = true;
+  }
 }
