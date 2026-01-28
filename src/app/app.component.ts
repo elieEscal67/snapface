@@ -11,6 +11,9 @@ imports: [FaceSnapComponent],
 })
 export class AppComponent implements OnInit {
 
+
+  faceSnaps !: FaceSnap[]
+
   mySnap !: FaceSnap ;
   myOtherSnap !: FaceSnap; 
   myLastSnap !: FaceSnap ;
@@ -18,20 +21,22 @@ export class AppComponent implements OnInit {
   
 
   ngOnInit() {
-    this.mySnap = new FaceSnap(
+
+    this.faceSnaps = [
+      this.mySnap = new FaceSnap(
       'Archibald',
       'Mon meilleur ami depuis tout petit !',
       'https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg',
       new Date(),
       0
-    );
+    ),
     
     this.myOtherSnap = new FaceSnap(
         'Biscotte',
         'Le chat le plus mignon du monde',
         'https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg',
         new Date(),
-        3)
+        3),
         
       this.myLastSnap =  new FaceSnap(
         'Rocket',
@@ -41,6 +46,11 @@ export class AppComponent implements OnInit {
         new Date(),
         10
       )
+
+    ]
+    
+
+      this.myOtherSnap.setLocation("chez ma soeur")
   }
   
   
