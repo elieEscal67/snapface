@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FaceSnap } from '../models/face-snap';
 import { DatePipe, NgClass, NgStyle, UpperCasePipe } from '@angular/common';
+import { FaceSnapsService } from '../services/face-snaps.service';
 
 @Component({
   selector: 'app-face-snap',
@@ -15,6 +16,7 @@ import { DatePipe, NgClass, NgStyle, UpperCasePipe } from '@angular/common';
 })
 export class FaceSnapComponent implements OnInit {
 
+  
   // --- @Input permet à ce composant enfant de recevoir un objet FaceSnap depuis le parent
   @Input() faceSnap!: FaceSnap;
 
@@ -22,7 +24,8 @@ export class FaceSnapComponent implements OnInit {
   snapButtonText!: string;   // texte affiché sur le bouton selon l'état
   userHasSnapped!: boolean;  // vrai si l'utilisateur a déjà cliqué sur Snap
 
-  ngOnInit() {
+  constructor(private faceSnapsService: FaceSnapsService) {}
+  ngOnInit(): void {
     // --- Initialisation de l'état local
     // Angular appelle ngOnInit après avoir créé le composant et injecté @Input
     this.snapButtonText = 'Oh Snap!';
@@ -40,14 +43,14 @@ export class FaceSnapComponent implements OnInit {
 
   // --- Retirer un snap
   unSnap(): void {
-    this.faceSnap.removeSnap();   // modifie le modèle reçu du parent
+    this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'unsnap');
     this.snapButtonText = 'Oh Snap!';
     this.userHasSnapped = false;  // met à jour l'état local
   }
 
   // --- Ajouter un snap
   snap(): void {
-    this.faceSnap.addSnap();      // modifie le modèle reçu du parent
+    this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'snap')
     this.snapButtonText = 'Oops, unSnap!';
     this.userHasSnapped = true;   // met à jour l'état local
   }
